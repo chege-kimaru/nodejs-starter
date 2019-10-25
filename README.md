@@ -2,7 +2,9 @@
 ### Major Technologies used
 - Express js
 - Sequelize ORM
+- Email Templates
 ### How to run
+- Edit
 - Rename `.env-example` to `.env` and fill in the environment variables
 ```shell script
 npm install

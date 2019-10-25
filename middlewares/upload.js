@@ -2,6 +2,9 @@
 const multer = require('multer');
 const uuidv1 = require('uuid/v1');
 const storage = multer.diskStorage({
+    fileFilter: function (req, file, cb) {
+        cb(null, true)
+    },
     destination: function (req, file, cb) {
         cb(null, process.env.FILES_BASE);
     },
