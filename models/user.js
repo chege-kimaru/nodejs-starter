@@ -14,14 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             unique: true,
-            validate: {
-                isEmail: true,
-                customValidator(value) {
-                    if (value === null && this.email === null) {
-                        throw new Error("Provide either username or email or both");
-                    }
-                }
-            }
+            allowNull: false
         },
         password: {
             type: DataTypes.STRING,
@@ -37,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 0,
             allowNull: false
         },
+        verified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull:false
+        },
     }, {
         underscored: true,
         // defaultScope: {
@@ -45,6 +43,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.associate = function (models) {
         // associations can be defined here
+        User.hasOne(models.UserVerificationToken, {
+            foreignKey: 'user_id'
+        });
+        User.hasOne(models.ForgotPasswordToken, {
+            foreignKey: 'user_id'
+        });
     };
     return User;
 };

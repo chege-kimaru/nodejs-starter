@@ -1,0 +1,7 @@
+<script>
+    const url = new URL(location.href);
+    const token = url.searchParams.get('token');
+    fetch(`/auth/verify/${token}`, {method: 'post'}).then(res => res.json()).then(data => {
+        alert('Success');
+    }).catch(err => alert('Error'))
+</script>

@@ -1,8 +1,16 @@
+const path = require('path');
+
 /**
  * Setup express
  */
 const express = require('express');
 const app = express();
+
+/**
+ * Setup handlebars
+ */
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','hbs');
 
 /**
  * Setup Morgan

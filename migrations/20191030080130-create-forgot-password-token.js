@@ -1,41 +1,36 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('forgot_password_tokens', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      username: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
-      },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull:false
-      },
-      password: {
+      token: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      role: {
-        type: Sequelize.INTEGER,
+      user_id: {
+        type: Sequelize.UUID,
+        unique: true,
         allowNull: false,
-        defaultValue: 1
+        onDelete: 'RESTRICT',
+        onUpdate: 'RESTRICT',
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
-      signup_type: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
+      expiry: {
+        type: Sequelize.DATE,
         allowNull: false
       },
-      verified: {
+      used: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
-        allowNull:false
+        allowNull: false,
+        defaultValue: false
       },
       created_at: {
         allowNull: false,
@@ -48,6 +43,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('forgot_password_tokens');
   }
 };
